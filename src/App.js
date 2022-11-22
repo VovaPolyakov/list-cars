@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+
+import { useEffect, useState } from 'react';
 import './App.css';
+import ListCars from './components/ListCars'
+
+const url = 'https://mocki.io/v1/03d57db2-2828-4b8d-af8b-10cfa6c537fc';
 
 function App() {
+
+  const [data,setData] = useState([])
+
+  const fetchData = async (url) => {
+    const res = await fetch(url)
+    const result = await res.json()
+
+    setData(result)
+  }
+
+  useEffect(() => {
+    fetchData(url);
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ListCars data={data}/> 
     </div>
   );
 }
